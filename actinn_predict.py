@@ -237,7 +237,7 @@ def predict_probability(X, parameters):
     params = {"W1": W1, "b1": b1, "W2": W2, "b2": b2, "W3": W3, "b3": b3, "W4": W4, "b4": b4}
     x = tf.placeholder("float")
     z4 = forward_propagation_for_predict(x, params)
-    p = tf.nn.softmax(z4, axis=0)
+    p = tf.exp(z4) / tf.reduce_sum(tf.exp(z4), 0)
     sess = tf.Session()
     prediction = sess.run(p, feed_dict = {x: X})
     return prediction
